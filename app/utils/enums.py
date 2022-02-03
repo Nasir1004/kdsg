@@ -64,4 +64,27 @@ class Category(str, Enum):
     fourty_hizb = "fourty_hizb"
     twenty_hizb = "twenty_hizb"
     ten_hizb = "ten_hizb" 
-    ten_hizbs_and_tangeem = "ten_hizbs_and_tangeem" 
+    ten_hizbs_and_tangeem = "ten_hizbs_and_tangeem"
+
+
+class Language(str, Enum):
+    housa = "housa"
+    yoruba = "yoruba"
+    igbo = "igbo"
+    english = "english"
+
+
+class Riwaya(str, Enum):
+    hafs = "hafs"
+    warsh = "warsh"
+    qalun = "qalun"
+    al_duri = "hafs"
+    khallad = "khallad"
+    Khalaf = "khalaf"
+    shuab = "shuab"
+    ibn_amir = "ibn_amir"
+    hisham = "hisham"
+    thakwan = "thakwan"
+    al_buzze ="albuzze"
+    qumbul = "qumbul"
+    as_sosee = "as_sosee"

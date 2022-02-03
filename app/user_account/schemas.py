@@ -6,10 +6,10 @@
 # @Description : something cool
 
 
-from re import M
+from re import L, M
 from unittest import result
 from pydantic.networks import EmailStr
-from app.utils.enums import Gender, Category, Marital_Status
+from app.utils.enums import Gender, Category, Marital_Status, Riwaya, Language
 from app.mixins.commons import ListBase, LoanTypeMin, UserAccountMinPublic, UserMin, LoanBeneficiaryMid, LoanBeneficiaryFull, LoanBeneficiaryMin, VehicleMin
 from pydantic import BaseModel, Field, validator
 from typing import List, Dict, Optional
@@ -171,8 +171,8 @@ class StudentCreateByNIN(BaseModel):
     address: str = Field(..., max_length=255, description="Address of student")
     marital_status: Marital_Status
     qualification: str
-    language_spoken: str
-    riwaya:str
+    language_spoken: Language
+    riwaya: Riwaya
     category: Category
 
     _val_address = uppercased("address")
@@ -186,8 +186,8 @@ class StudentCreateByImage(BaseModel):
     address: str = Field(..., max_length=255, description="address of student")
     marital_status: Marital_Status
     qualification:str = Field(..., max_length=255, description="qualification of student")
-    language_spoken:str = Field(..., max_length=255, description="image of student")
-    riwaya:str = Field(..., max_length=255, description="image of student")
+    language_spoken: Language
+    riwaya: Riwaya
     category: Category
     gender: Gender
 
@@ -200,8 +200,8 @@ class StudentCreateByImage(BaseModel):
 class StudentCreate(BaseModel):
     marital_status: Marital_Status
     qualification: str
-    language_spoken: str
-    riwaya:str
+    language_spoken: Language
+    riwaya: Riwaya
     category: Category
     user_account_uuid: str = Field(..., description="uuid of user account")
     creator_uuid: str = Field(..., description="uuid of creator")
@@ -214,10 +214,10 @@ class StudentUpdate(BaseModel):
     phone: Optional[str] = Field(None, max_length=20, description="Phone number of the student")
     address: Optional[str] = Field(None, max_length=255, description="Address of student")
     gender: Optional[Gender] = Field(None)
-    # marital_status: Marital_Status
+    marital_status: Marital_Status
     qualification:str = Field(..., max_length=255, description="qualification of student")
-    language_spoken:str = Field(..., max_length=255, description="image of student")
-    riwaya:str = Field(..., max_length=255, description="image of student")
+    language_spoken: Language
+    riwaya: Riwaya
     category: Category
 
     _val_firstname = uppercased("firstname")
@@ -237,6 +237,10 @@ class StudentFilter(BaseModel):
 
 
 class StudentOut(BaseSchemaMixin):
+    qualification:str = Field(..., max_length=255, description="qualification of student")
+    language_spoken: Language
+    riwaya: Riwaya
+    category: Category
     user_account_uuid: str = Field(..., description="uuid of user account")
     creator_uuid: str = Field(..., description="uuid of creator")
 

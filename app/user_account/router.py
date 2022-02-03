@@ -124,6 +124,18 @@ async def list_student(
 ):
     return cruds.list_student(db, filter, skip, limit)
 
+
+@Student_router.get(
+    "/all/category",
+    response_model=List[schemas.StudentOut],
+)
+async def get_all_student_by_category(
+    category: str,
+    db: Session = Depends(get_db)
+):
+    return cruds.get_all_student_by_category(db, category)
+
+
 # ============[ Delete Routes]============
 
 @Student_router.delete(

@@ -8,7 +8,7 @@
 from unicodedata import category
 from app.utils.enums import LoanPaymentStatus
 from os import getenv
-from typing import Optional, Union
+from typing import Optional, Union, List
 from app.utils.misc import gen_email, gen_random_password
 from app.dependencies.dependencies import get_recognition_auth_token
 from datetime import date, datetime, timedelta
@@ -255,3 +255,7 @@ def verify_student_creds(
 ):
     check_model_is_duplicate(db, models.Student, \
         {"phone": student.phone}, "phone Number")
+
+
+def get_all_student_by_category(db: Session, category: str) -> List[models.Student]:
+    return db.query(models.Student).filter(models.Student.category == category).all()
