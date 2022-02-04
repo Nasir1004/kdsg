@@ -52,6 +52,7 @@ class Student(BaseMixin, Base):
     registration_date = Column(Date, nullable=False, default=date.today(), server_default=func.current_date())
     marital_status = Column(Enum("single","married"), name ="marital_status", default="single", nullable=False)
     qualification = Column(String(length=255), nullable=False)
+    lga = Column(String(length=255), nullable=False)
     language_spoken = Column(Enum("housa", "yoruba", 'igbo', "english", default="housa", nullable=False))
     riwaya = Column(Enum("hafs", "warsh", "qalun", "al_duri", "khallad", " Khalaf ", "shuab", "ibn_amir", "hisham", "thakwan",  "albuzze", "qumbul", "as_sosee", name="riwaya_type", default="hafs"), nullable=False)
     category = Column(Enum("sixty_hizbs_tafsir", "sixty_Hizbs", "fourty_Hizbs", "twenty_Hizbs", "ten_hizbs_and_tangeem", "two_Hizbs",  name="category_type"), nullable=False)

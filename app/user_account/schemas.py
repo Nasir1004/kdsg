@@ -169,6 +169,7 @@ class StudentCreateByNIN(BaseModel):
     nin: str = Field(..., max_length=16, description="National Identity Number")
     phone: str = Field(..., max_length=20, description="phone number of student")
     address: str = Field(..., max_length=255, description="Address of student")
+    lga: str = Field(..., max_length=255, description="lga of student")
     marital_status: Marital_Status
     qualification: str
     language_spoken: Language
@@ -176,6 +177,7 @@ class StudentCreateByNIN(BaseModel):
     category: Category
 
     _val_address = uppercased("address")
+    _val_address = uppercased("lga")
 
 
 class StudentCreateByImage(BaseModel):
@@ -186,6 +188,7 @@ class StudentCreateByImage(BaseModel):
     address: str = Field(..., max_length=255, description="address of student")
     marital_status: Marital_Status
     qualification:str = Field(..., max_length=255, description="qualification of student")
+    lga: str = Field(..., max_length=255, description="lga of student")
     language_spoken: Language
     riwaya: Riwaya
     category: Category
@@ -203,6 +206,7 @@ class StudentCreate(BaseModel):
     language_spoken: Language
     riwaya: Riwaya
     category: Category
+    lga: str = Field(..., max_length=255, description="lga of student")
     user_account_uuid: str = Field(..., description="uuid of user account")
     creator_uuid: str = Field(..., description="uuid of creator")
 
@@ -213,6 +217,7 @@ class StudentUpdate(BaseModel):
     lastname: Optional[str] = Field(None, max_length=45, description="Lastname of the student")
     phone: Optional[str] = Field(None, max_length=20, description="Phone number of the student")
     address: Optional[str] = Field(None, max_length=255, description="Address of student")
+    lga: str = Field(..., max_length=255, description="lga of student")
     gender: Optional[Gender] = Field(None)
     marital_status: Marital_Status
     qualification:str = Field(..., max_length=255, description="qualification of student")
@@ -224,6 +229,7 @@ class StudentUpdate(BaseModel):
     _val_lastname = uppercased("lastname")
     _val_middlename = uppercased("middlename")
     _val_address = uppercased("address")
+    _val_address = uppercased("lga")
 
 
 class StudentFilter(BaseModel):
@@ -233,6 +239,7 @@ class StudentFilter(BaseModel):
     qualification:str = Field(..., max_length=255, description="qualification of student")
     language_spoken:str = Field(..., max_length=255, description="image of student")
     riwaya:str = Field(..., max_length=255, description="image of student")
+    lga: str = Field(..., max_length=255, description="lga of student")
     category: Category
 
 
@@ -241,6 +248,7 @@ class StudentOut(BaseSchemaMixin):
     language_spoken: Language
     riwaya: Riwaya
     category: Category
+    lga: str = Field(..., max_length=255, description="lga of student")
     user_account_uuid: str = Field(..., description="uuid of user account")
     creator_uuid: str = Field(..., description="uuid of creator")
 

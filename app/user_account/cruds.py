@@ -84,7 +84,6 @@ def create_uac_by_nin(
     else:
         next_of_kin_uuid = None
     
-
     to_create = schemas.UserAccountCreate(user_uuid=str(db_user.uuid), nin=db_nin_info.nin, image =db_nin_info.image, phone=db_nin_info.phone if db_nin_info.phone else user_account.phone, \
         address=user_account.address, gender=db_nin_info.gender, \
         birthdate=datetime.strptime(db_nin_info.birthdate, "%d-%m-%Y").date(), \
@@ -111,7 +110,7 @@ def create_student_by_nin(
 
     to_create = schemas.StudentCreate(user_account_uuid=str(db_uac.uuid), \
         creator_uuid=str(user.uuid), marital_status=student.marital_status, riwaya=student.riwaya, \
-        category=student.category, qualification=student.qualification,language_spoken=student.language_spoken)
+        category=student.category, qualification=student.qualification,language_spoken=student.language_spoken, lga=student.lga)
     
     db_student: models.Student = create_model(db, models.Student, "student", to_create)
     return db_student
@@ -145,7 +144,7 @@ def get_student_by_uuid(
     db: Session, 
     student_uuid: str
 ):
-    return get_model_by_field_first(db, models.Student, "uuid", "Driver", student_uuid)
+    return get_model_by_field_first(db, models.Student, "uuid", "Student", student_uuid)
 
 
 # =========[ Update ]=========
