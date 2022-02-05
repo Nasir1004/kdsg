@@ -29,7 +29,8 @@ class Coordinator(BaseMixin, Base):
     middlename = Column(String(length=45), nullable=True, default="")
     phone = Column(String(length=20), nullable=False)
     address = Column(String(length=255), nullable=False, default="")
-    image = Column(String(length=255), nullable=False)
+
+    students: relationship = relationship("Student", back_populates="coordinator")
 
 
 class UserAccount(BaseMixin, Base):
@@ -57,5 +58,8 @@ class Student(BaseMixin, Base):
     riwaya = Column(Enum("hafs", "warsh", "qalun", "al_duri", "khallad", " Khalaf ", "shuab", "ibn_amir", "hisham", "thakwan",  "albuzze", "qumbul", "as_sosee", name="riwaya_type", default="hafs"), nullable=False)
     category = Column(Enum("sixty_hizbs_tafsir", "sixty_Hizbs", "fourty_Hizbs", "twenty_Hizbs", "ten_hizbs_and_tangeem", "two_Hizbs",  name="category_type"), nullable=False)
     creator_uuid = Column(String(length=50), ForeignKey("users.uuid"), nullable=False)
+    coordinator_uuid = Column(String(length=50), ForeignKey('coordinators.uuid'), nullable=True)
+
+    coordinator: relationship = relationship("Coordinator", lazy="joined", back_populates="students")
     user_account: relationship = relationship("UserAccount", lazy="joined", foreign_keys=[user_account_uuid])
     creator: relationship = relationship("User", lazy="joined")

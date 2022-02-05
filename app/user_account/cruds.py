@@ -23,7 +23,7 @@ from app.user.schemas import UserCreate, UserSchema, UserUpdate
 from app.user.cruds import check_user_exist, create_user
 from app.user.models import User
 from sqlalchemy.orm.session import Session
-from app.utils.db import check_model_exists, check_model_is_duplicate, create_model, delete_model_by_field, list_models_and_filter_by_equality, get_model_by_field_first, update_model_by_field
+from app.utils.db import get_model_all, check_model_exists, update_model_by_uuid, check_model_is_duplicate, create_model, delete_model_by_field, list_models_and_filter_by_equality, get_model_by_field_first, update_model_by_field
 
 from app.user_account import schemas, models
 
@@ -98,17 +98,22 @@ def create_uac_by_nin(
 
 def create_student_by_nin(
     db: Session, 
-    student: schemas.StudentCreateByNIN, 
+    student: schemas.StudentCreateByNIN,
     user: UserSchema
 ):
-    check_duplicate_uac_by_nin(db, student.nin)
-    
+    db_uac = check_duplicate_uac_by_nin(db, student.nin)
     email = gen_email()
     uac_to_create = schemas.UserAccountByNIN(nin=student.nin, email=email, \
-        address=student.address, phone=student.phone)
+    address=student.address, phone=student.phone)
     db_uac: models.UserAccount = create_uac_by_nin(db, uac_to_create, user, autocommit=False)
+    
+    coordinator = schemas.CoordinatorCreate(firstname=student.coordinator_firstname, lastname=student.coordinator_lastname, \
+        middlename=student.coordinator_middlename, phone=student.coordinator_phone, address=student.coordinator_address)
+    
+    db_coordinator: models.Coordinator = create_model(db, models.Coordinator, "Coordinator", coordinator, autocommit=False)
+    coordinator_uuid = str(db_coordinator.uuid)
 
-    to_create = schemas.StudentCreate(user_account_uuid=str(db_uac.uuid), \
+    to_create = schemas.StudentCreate(user_account_uuid=str(db_uac.uuid),  coordinator_uuid=coordinator_uuid, \
         creator_uuid=str(user.uuid), marital_status=student.marital_status, riwaya=student.riwaya, \
         category=student.category, qualification=student.qualification,language_spoken=student.language_spoken, lga=student.lga)
     
@@ -149,6 +154,10 @@ def get_student_by_uuid(
 
 # =========[ Update ]=========
 
+def update_student_by_uuid(db: Session, student: schemas.StudentUpdate, student_uuid: str) -> models.Student:
+    return update_model_by_uuid(db, models.Student, student, "Student", student_uuid)
+
+
 def uac_image_update(
     db: Session, 
     user_image: UploadFile, 
@@ -185,6 +194,10 @@ def list_all_uac(
 
     return list_models_and_filter_by_equality(db, models.UserAccount, fields, "User Account", \
         limit=limit, skip=skip, count_by_column="uuid", join_fields=join_fields)
+
+
+def get_products(db: Session, limit: int = 100, skip: int = 0) -> List[models.Student]:
+    return get_model_all(db, models.Student, limit, skip)
 
 
 def list_students(

@@ -32,6 +32,8 @@ def upgrade():
     sa.Column('riwaya', sa.Enum("hafs", "warsh", "qalun", "al_duri", "khallad", " Khalaf ", "shuab", "ibn_amir", "hisham", "thakwan",  "albuzze", "qumbul", "as_sosee", name="riwaya_type"), nullable=False),
     sa.Column('category', sa.Enum("sixty_hizbs_tafsir", "sixty_Hizbs", "fourty_Hizbs", "twenty_Hizbs", "ten_hizbs_and_tangeem", "two_Hizbs",  name="category_type"), nullable=False),
     sa.Column('creator_uuid', sa.String(length=50), nullable=False),
+    sa.Column('coordinator_uuid', sa.String(length=50), nullable=True),
+    sa.ForeignKeyConstraint(['coordinator_uuid'], ['coordinators.uuid'], ),
     sa.ForeignKeyConstraint(['creator_uuid'], ['users.uuid'], ),
     sa.ForeignKeyConstraint(['user_account_uuid'], ['useraccounts.uuid'], ),
     sa.PrimaryKeyConstraint('id'),

@@ -40,7 +40,6 @@ def upgrade():
     sa.Column('middlename', sa.String(length=45), nullable=True),
     sa.Column('phone', sa.String(length=20), nullable=False),
     sa.Column('address', sa.String(length=255), nullable=False),
-    sa.Column('image', sa.String(length=255), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('uuid')
     )

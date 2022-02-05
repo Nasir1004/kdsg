@@ -14,6 +14,7 @@ from sqlalchemy.orm.session import Session
 from app.dependencies.dependencies import HasPermission, get_current_user, get_db
 from app.user.schemas import UserSchema
 from app.user_account import cruds, schemas
+from app.user_account.models import Student
 
 uac_router = APIRouter(
     prefix="/user_account",
@@ -60,8 +61,8 @@ async def create_uac_by_nin(
 )
 async def create_student_by_nin(
     db: Session = Depends(get_db),
-    student: schemas.StudentCreateByNIN = Body(...),
-    user: UserSchema = Depends(get_current_user)
+    student: schemas.StudentCreateByNIN = Depends(),
+    user: UserSchema = Depends(get_current_user),
 ):
     return cruds.create_student_by_nin(db, student, user)
 
@@ -80,6 +81,7 @@ async def get_uac_by_uuid(
     return cruds.get_uac_by_uuid(db, uac_uuid)
 
 
+
 @Student_router.get(
     "/id/{student_uuid}",
     response_model=schemas.StudentOut,
@@ -95,34 +97,30 @@ async def get_student_by_uuid(
 # ============[ Update Routes]============
 
 
+@Student_router.put(
+    "/{student_uuid}",
+    response_model = schemas.StudentOut,
+    # dependencies=[Depends(HasPermission(["can_update_visit"]))]
+)
+async def update_visit_by_uuid(
+    student: schemas.StudentUpdate,
+    student_uuid: str,
+    db: Session = Depends(get_db),
+):
+    return cruds.update_student_by_uuid(db, student, student_uuid)
 
 # ============[ List Routes]============
-@uac_router.get(
-    "/list/all",
-    response_model=schemas.UserAccountList,
-    # dependencies=[Depends(HasPermission(["can_view_all_user_account"]))],
-)
-async def list_all_uac(
-    db: Session = Depends(get_db),
-    filter: schemas.UserAccountFilter = Depends(),
-    skip: int = 0,
-    limit: int = 100,
-):
-    return cruds.list_all_uac(db, filter, skip, limit)
-
 
 @Student_router.get(
-    "/list",
-    response_model=schemas.StudentList,
-    # dependencies=[Depends(HasPermission(["can_list_student"]))],
+    "/all",
+    response_model=List[schemas.StudentOut],
 )
-async def list_student(
+async def get_all_student(
     db: Session = Depends(get_db),
-    filter: schemas.StudentFilter = Depends(),
-    skip: int = 0,
     limit: int = 100,
+    skip: int = 0
 ):
-    return cruds.list_student(db, filter, skip, limit)
+    return cruds.get_products(db, limit, skip)
 
 
 @Student_router.get(

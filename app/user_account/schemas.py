@@ -63,7 +63,6 @@ class CoordinatorCreate(BaseModel):
     middlename: Optional[str] = Field(None, max_length=45, description="middle name of coordinator")
     phone: str = Field(..., max_length=20, description="phone number of coordinator")
     address: str = Field(..., max_length=100, description="address of coordinator")
-    image: str = Field(..., max_length=255, description="image of  coordinator")
 
     _val_firstname = uppercased("firstname")
     _val_lastname = uppercased("lastname")
@@ -170,6 +169,11 @@ class StudentCreateByNIN(BaseModel):
     phone: str = Field(..., max_length=20, description="phone number of student")
     address: str = Field(..., max_length=255, description="Address of student")
     lga: str = Field(..., max_length=255, description="lga of student")
+    coordinator_firstname: str = Field(..., max_length=45, description="first name of coordinator")
+    coordinator_lastname: str = Field(..., max_length=45, description="last name of coordinator")
+    coordinator_middlename: Optional[str] = Field(None, max_length=45, description="middle name of coordinator")
+    coordinator_phone: str = Field(..., max_length=20, description="phone number of coordinator")
+    coordinator_address: str = Field(..., max_length=100, description="address of coordinator")
     marital_status: Marital_Status
     qualification: str
     language_spoken: Language
@@ -186,6 +190,11 @@ class StudentCreateByImage(BaseModel):
     middlename: Optional[str] = Field(None, max_length=45, description="middle name of student")
     phone: str = Field(..., max_length=20, description="phone number of student")
     address: str = Field(..., max_length=255, description="address of student")
+    coordinator_firstname: str = Field(..., max_length=45, description="first name of coordinator")
+    coordinator_lastname: str = Field(..., max_length=45, description="last name of coordinator")
+    coordinator_middlename: Optional[str] = Field(None, max_length=45, description="middle name of coordinator")
+    coordinator_phone: str = Field(..., max_length=20, description="phone number of coordinator")
+    coordinator_address: str = Field(..., max_length=100, description="address of coordinator")
     marital_status: Marital_Status
     qualification:str = Field(..., max_length=255, description="qualification of student")
     lga: str = Field(..., max_length=255, description="lga of student")
@@ -207,16 +216,12 @@ class StudentCreate(BaseModel):
     riwaya: Riwaya
     category: Category
     lga: str = Field(..., max_length=255, description="lga of student")
+    coordinator_uuid: str = Field(..., description="unique id of coordinator")
     user_account_uuid: str = Field(..., description="uuid of user account")
     creator_uuid: str = Field(..., description="uuid of creator")
 
 
 class StudentUpdate(BaseModel):
-    firstname: Optional[str] = Field(None, max_length=45, description="Firstname of the student")
-    middlename: Optional[str] = Field(None, max_length=45, description="Middlename of the student")
-    lastname: Optional[str] = Field(None, max_length=45, description="Lastname of the student")
-    phone: Optional[str] = Field(None, max_length=20, description="Phone number of the student")
-    address: Optional[str] = Field(None, max_length=255, description="Address of student")
     lga: str = Field(..., max_length=255, description="lga of student")
     gender: Optional[Gender] = Field(None)
     marital_status: Marital_Status
@@ -224,12 +229,6 @@ class StudentUpdate(BaseModel):
     language_spoken: Language
     riwaya: Riwaya
     category: Category
-
-    _val_firstname = uppercased("firstname")
-    _val_lastname = uppercased("lastname")
-    _val_middlename = uppercased("middlename")
-    _val_address = uppercased("address")
-    _val_address = uppercased("lga")
 
 
 class StudentFilter(BaseModel):
@@ -249,10 +248,12 @@ class StudentOut(BaseSchemaMixin):
     riwaya: Riwaya
     category: Category
     lga: str = Field(..., max_length=255, description="lga of student")
+    coordinator_uuid: str = Field(..., description="unique id of coordinator")
     user_account_uuid: str = Field(..., description="uuid of user account")
     creator_uuid: str = Field(..., description="uuid of creator")
 
     user_account: UserAccountOut
+    coordinator: CoordinatorOut
     creator: UserMin
 
 
