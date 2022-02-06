@@ -6,3 +6,4 @@ fastapienv
 __pycache__
 transport_env
 tax_env
+random_seed

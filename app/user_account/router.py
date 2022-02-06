@@ -96,7 +96,6 @@ async def get_student_by_uuid(
 
 # ============[ Update Routes]============
 
-
 @Student_router.put(
     "/{student_uuid}",
     response_model = schemas.StudentOut,
