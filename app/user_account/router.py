@@ -119,7 +119,7 @@ async def get_all_student(
     limit: int = 100,
     skip: int = 0
 ):
-    return cruds.get_products(db, limit, skip)
+    return cruds.get_student_all(db, limit, skip)
 
 
 @Student_router.get(

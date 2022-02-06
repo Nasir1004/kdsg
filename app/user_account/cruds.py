@@ -196,7 +196,7 @@ def list_all_uac(
         limit=limit, skip=skip, count_by_column="uuid", join_fields=join_fields)
 
 
-def get_products(db: Session, limit: int = 100, skip: int = 0) -> List[models.Student]:
+def get_student_all(db: Session, limit: int = 100, skip: int = 0) -> List[models.Student]:
     return get_model_all(db, models.Student, limit, skip)
 
 
