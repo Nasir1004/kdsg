@@ -99,7 +99,7 @@ async def get_student_by_uuid(
 @Student_router.put(
     "/{student_uuid}",
     response_model = schemas.StudentOut,
-    # dependencies=[Depends(HasPermission(["can_update_visit"]))]
+    # dependencies=[Depends(HasPermission(["can_update_student"]))]
 )
 async def update_visit_by_uuid(
     student: schemas.StudentUpdate,

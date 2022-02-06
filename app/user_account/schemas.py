@@ -91,7 +91,7 @@ class CoordinatorOut(BaseSchemaMixin):
     address: str = Field(..., max_length=100, description="address of coordinator")
 
 
-class GuarantorList(ListBase):
+class CoordinatorList(ListBase):
     result: List[CoordinatorOut]
 
 
