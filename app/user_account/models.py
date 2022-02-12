@@ -51,7 +51,7 @@ class UserAccount(BaseMixin, Base):
 class Student(BaseMixin, Base):
     user_account_uuid = Column(String(length=50), ForeignKey("useraccounts.uuid"), nullable=False)
     registration_date = Column(Date, nullable=False, default=date.today(), server_default=func.current_date())
-    marital_status = Column(Enum("single","married"), name ="marital_status", default="single", nullable=False)
+    marital_status =  Column(String(length=255), nullable=False)
     qualification = Column(String(length=255), nullable=False)
     lga = Column(String(length=255), nullable=False)
     language_spoken = Column(String(length=255), nullable=False)

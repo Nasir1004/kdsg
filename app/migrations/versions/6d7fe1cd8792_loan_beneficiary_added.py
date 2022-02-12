@@ -25,7 +25,7 @@ def upgrade():
     sa.Column('last_modified', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.Column('user_account_uuid', sa.String(length=50), nullable=False),
     sa.Column('registration_date', sa.Date(), server_default=sa.text('CURRENT_DATE'), nullable=False),
-    sa.Column('marital_status',  sa.Enum("married", "single" , name ="marital_status"), nullable=False),
+    sa.Column('marital_status',  sa.String(length=255), nullable=False),
     sa.Column('qualification', sa.String(length=255), nullable=False),
     sa.Column('lga', sa.String(length=255), nullable=False),
     sa.Column('language_spoken', sa.String(length=255), nullable=False),

@@ -175,7 +175,7 @@ class StudentCreateByNIN(BaseModel):
     coordinator_middlename: Optional[str] = Field(None, max_length=45, description="middle name of coordinator")
     coordinator_phone: str = Field(..., max_length=20, description="phone number of coordinator")
     coordinator_address: str = Field(..., max_length=100, description="address of coordinator")
-    marital_status: Marital_Status
+    marital_status: str
     qualification: str
     language_spoken: str
     riwaya: str
@@ -196,7 +196,7 @@ class StudentCreateByImage(BaseModel):
     coordinator_middlename: Optional[str] = Field(None, max_length=45, description="middle name of coordinator")
     coordinator_phone: str = Field(..., max_length=20, description="phone number of coordinator")
     coordinator_address: str = Field(..., max_length=100, description="address of coordinator")
-    marital_status: Marital_Status
+    marital_status: str
     qualification:str = Field(..., max_length=255, description="qualification of student")
     lga: str = Field(..., max_length=255, description="lga of student")
     language_spoken: str
@@ -245,9 +245,11 @@ class StudentFilter(BaseModel):
 
 class StudentOut(BaseSchemaMixin):
     qualification:str = Field(..., max_length=255, description="qualification of student")
+    phone: Optional[str] = Field(None, max_length=20)
     language_spoken:str
     riwaya: str
     category: str
+    marital_status: str
     lga: str = Field(..., max_length=255, description="lga of student")
     coordinator_uuid: str = Field(..., description="unique id of coordinator")
     user_account_uuid: str = Field(..., description="uuid of user account")
