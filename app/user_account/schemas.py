@@ -6,6 +6,7 @@
 # @Description : something cool
 
 
+from ast import Str
 from re import L, M
 from unittest import result
 from pydantic.networks import EmailStr
@@ -176,9 +177,9 @@ class StudentCreateByNIN(BaseModel):
     coordinator_address: str = Field(..., max_length=100, description="address of coordinator")
     marital_status: Marital_Status
     qualification: str
-    language_spoken: Language
-    riwaya: Riwaya
-    category: Category
+    language_spoken: str
+    riwaya: str
+    category: str
 
     _val_address = uppercased("address")
     _val_address = uppercased("lga")
@@ -198,9 +199,9 @@ class StudentCreateByImage(BaseModel):
     marital_status: Marital_Status
     qualification:str = Field(..., max_length=255, description="qualification of student")
     lga: str = Field(..., max_length=255, description="lga of student")
-    language_spoken: Language
-    riwaya: Riwaya
-    category: Category
+    language_spoken: str
+    riwaya: str
+    category: str
     gender: Gender
 
     _val_firstname = uppercased("firstname")
@@ -210,11 +211,11 @@ class StudentCreateByImage(BaseModel):
    
 
 class StudentCreate(BaseModel):
-    marital_status: Marital_Status
+    marital_status: str
     qualification: str
-    language_spoken: Language
-    riwaya: Riwaya
-    category: Category
+    language_spoken:str
+    riwaya: str
+    category: str
     lga: str = Field(..., max_length=255, description="lga of student")
     coordinator_uuid: str = Field(..., description="unique id of coordinator")
     user_account_uuid: str = Field(..., description="uuid of user account")
@@ -224,29 +225,29 @@ class StudentCreate(BaseModel):
 class StudentUpdate(BaseModel):
     lga: str = Field(..., max_length=255, description="lga of student")
     gender: Optional[Gender] = Field(None)
-    marital_status: Marital_Status
+    marital_status: str
     qualification:str = Field(..., max_length=255, description="qualification of student")
-    language_spoken: Language
-    riwaya: Riwaya
-    category: Category
+    language_spoken: str
+    riwaya: str
+    category: str
 
 
 class StudentFilter(BaseModel):
     phone: Optional[str] = Field(None, max_length=20)
     nin: Optional[str] = Field(None, max_length=16)
-    marital_status: Marital_Status
+    marital_status: str
     qualification:str = Field(..., max_length=255, description="qualification of student")
     language_spoken:str = Field(..., max_length=255, description="image of student")
     riwaya:str = Field(..., max_length=255, description="image of student")
     lga: str = Field(..., max_length=255, description="lga of student")
-    category: Category
+    category: str
 
 
 class StudentOut(BaseSchemaMixin):
     qualification:str = Field(..., max_length=255, description="qualification of student")
-    language_spoken: Language
-    riwaya: Riwaya
-    category: Category
+    language_spoken:str
+    riwaya: str
+    category: str
     lga: str = Field(..., max_length=255, description="lga of student")
     coordinator_uuid: str = Field(..., description="unique id of coordinator")
     user_account_uuid: str = Field(..., description="uuid of user account")
